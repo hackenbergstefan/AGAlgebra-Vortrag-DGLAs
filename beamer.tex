@@ -1,0 +1,453 @@
+\documentclass{vorlage}
+
+\title{AG Algebra}
+\subtitle{Differential graduierte Lie Algebren}
+
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+%\author{F.~Author\inst{1} \and S.~Another\inst{2}}
+\author{Stefan Hackenberg}
+
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+% \institute[Universities of]
+% {
+% \inst{1}%
+% Department of Computer Science\\
+% Univ of S
+% \and
+% \inst{2}%
+% Department of Theoretical Philosophy\\
+% Univ of E}
+
+\date{05.06.2014}
+
+
+% This is only inserted into the PDF information catalog. Can be left
+% out.
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+% \AtBeginSubsection[]
+% {
+% \begin{frame}<beamer>
+% \frametitle{Inhalt}
+% \tableofcontents[currentsection,currentsubsection]
+% \end{frame}
+% }
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+ 
+
+ 
+%\beamerdefaultoverlayspecification{<+->}
+\begin{document}
+
+
+
+
+%\begin{frame}
+%\frametitle{Inhalt}
+%\tableofcontents
+%\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\colorlet{col1}{red!50!black}
+\colorlet{col2}{blue!30}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{Differential graduierte Lie Algebren}
+\subsection{Exp, Log, freie Lie Algebren und BCH}
+
+\begin{frame}[<+->]
+  \begin{block}{Generalvoraussetzung} $k$ ein Körper mit Charakteristik $0$.
+    $V$ ein $k$-Vektorraum.
+  \end{block}
+  \begin{block}{Notation}
+    Sei $L$ eine Lie Algebra. Für $a\in L$ heißt
+    \[ \ad(a) = [a,\_]:\ L \to L,\quad b \mapsto [a,b]\]
+    \emph{Adjunktion mit $a$}.
+  \end{block}
+  \begin{block}{Notation}
+    Für eine assoziative Algebra $R$ bezeichne $R_L$ die dazu assoziierte Lie
+    Algebra mit Lie-Klammer $[a,b] := ab -ba$.
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Notationen}
+\[\begin{tikzpicture}
+  \matrix [column sep=2.5cm, row sep=10pt,
+    column 1/.style={column sep=0pt, anchor=base east},
+    column 2/.style={anchor=base west},
+    column 3/.style={column sep=0pt, anchor=base east},
+    column 4/.style={anchor=base west}]
+  {
+    \node<2-> (p) {$P(V) \speq{:=}$};
+      & \uncover<2->{
+        \node (a) {$\left\{ \ds{\sum_{n\geq 0}} v_n :\ v_n \in \bigotimes^n V
+         \right\}$};}
+      & \uncover<2->{\node (b) {$T(V)\speq{:=} $};}
+      & \node<2->{$ \ds{\bigoplus_{n\geq 0}} \bigotimes^n V$}; \\
+    \node<5->{$\fr m(V)\speq{:=} $};
+      & \node<5-> (m) {$ \left\{ \ds{\sum_{n\geq 1}} v_n :\ v_n \in
+        \bigotimes^n V \right\}$};
+      & \node<5->{$\overline{T(V)}\speq{:=} $};
+      & \uncover<5->{\node (tbar) {$\ds{\bigoplus_{n\geq 1}} \bigotimes^n
+          V$};} \\ 
+    \node<7->{$E(V)\speq{:=} $};
+      &\node<7->{$1 + \fr m(V)$}; \\
+  };
+  \begin{scope}
+    \uncover<3->{\draw[<->,line width=3pt, draw=col2!30, text=col1, 
+      shorten <=10pt, shorten >=10pt, font=\tiny, align=center] 
+      (a) 
+      --
+      node[above=5pt,near start] {unendl.\\ Summen}
+      node[above=5pt,near end] {endl.\\ Summen}
+      (b);}
+    \node<4->[right, font=\footnotesize, fill=col2!20, rounded corners,
+      text=col1] (p') at ($(p.west)+(25pt,-18pt)$)
+      {assoziative $k$-Algebra durch Cauchy-Produkt};
+    \path<4->[->,color=col2, line width=1pt, shorten <=2pt] 
+      (p'.west) edge[bend left] ($(p.west)+(8pt,-10pt)$);
+  
+    \uncover<4->{\node[right, font=\footnotesize, fill=col2!20, rounded corners, 
+      text=col1] (b') at ($(b.west)+(25pt,-18pt)$)
+      {assoziative $k$-Algebra durch $\otimes$};}
+    \path<4->[->,color=col2, line width=1pt, shorten <=2pt] 
+      (b'.west) edge[bend left] ($(b.west)+(8pt,-10pt)$);
+   
+   \node<6->[right, font=\footnotesize, 
+      text=col1] at ($(m.east)+(0pt,0pt)$)
+      {Ideal in $P(V)$};
+    \uncover<6->{\node[right, font=\footnotesize, 
+      text=col1] at ($(tbar.east)+(0pt,4pt)$)
+      {Ideal in $T(V)$};}
+  \end{scope}
+\end{tikzpicture}\]
+\[\begin{tikzpicture}
+  \matrix [column sep=0.5cm, row sep=8pt,
+    column 1/.style={column sep=0pt, anchor=east},
+    column 2/.style={anchor=west},
+    column 3/.style={column sep=0pt, anchor=east},
+    column 4/.style={anchor=west}]
+  {
+    \node<8-> (A) {$e:$};
+      & \node<8->{$\fr m(V) \to E(V),$};
+      & \node<8->{$e^x$};
+      & \node<8->{$\speq= \ds{\sum_{n=0}^\infty \frac{x^n}{n!}}$}; \\
+    \node<8-> (B) {$\log :$};
+      & \node<8->{$E(V) \to \fr m(V),$};
+      & \node<8->{$\log(1+x)$};
+      & \node<8->{$\speq= \ds{\sum_{n=1}^\infty (-1)^{n-1} \frac{x^n}{n}}$}; \\
+  };
+  \begin{scope}[overlay]
+    \path<9->[<->,line width=2pt,col2!50, text=col1] (B.west) edge[bend left=90]
+      node[sloped, text width=2cm, align=center, font=\scriptsize,above]
+        {sind invers zueinander} (A.west-|B.west);
+  \end{scope}
+\end{tikzpicture}\]
+\end{frame}
+
+
+\begin{frame}[fragile]{Notationen}
+\[\begin{tikzpicture}[remember picture]
+  \matrix [column sep=0.5cm, row sep=10pt,
+    column 1/.style={column sep=0pt, anchor=base east},
+    column 2/.style={anchor=base west},
+    column 3/.style={column sep=0pt, anchor=base east},
+    column 4/.style={anchor=base west}]
+  {
+    \node{$\widehat l(V)\speq{:=} $};
+      & \node (LV2) {$\{ x \in P(V) :\ \Delta(x) = p(x)+q(x)\}$};
+      & \uncover<3->{\node (lv) {$l(V)\speq{:=}$};}
+      & \uncover<3->{\node[font=\footnotesize,text width=4cm]
+        {Die kleinste Lie Unteralgebra\\ von $\overline{T(V)}_L$,
+        die $V$ enthält};} \\
+    \node {$\widehat L(V) \speq{:=}$};
+      & \node (LV) {$\{ x \in P(V) :\ \Delta(x) = p(x)q(x)\}$}; \\
+  };
+  \begin{scope}[overlay]
+    \node<4->[right, font=\small, fill=col2!20, rounded corners,  
+      text=col1] (lv'') at ($(lv.west)+(25pt,25pt)$)
+      {die \emph{freie Lie-Algebra von $V$}};
+    \path<4->[->,color=col2, line width=1pt, shorten <=2pt] 
+      (lv''.west) edge[bend right] ($(lv.west)+(8pt,10pt)$);
+  \end{scope}
+  \begin{scope}  
+    \node<2->[font=\footnotesize, 
+      text width=6cm,fill=col2!20, rounded corners,  
+      text=col1] (LV') at ($(LV.south)+(-20pt,-25pt)$)
+      {$\Delta,p,q: P(V) \to P(V\oplus V)$ induziert durch
+        \[ \Delta_1(v) = (v,v), \quad p_1(v) = (v,0), \quad q_1(v)=(0,v)\,.\]};
+    \path<2->[->,color=col2, line width=1pt, shorten <=2pt] 
+      (LV'.north) edge[bend right] ($(LV.south)+(10pt,0pt)$);
+    \path<2->[->,color=col2, line width=1pt, shorten <=2pt] 
+      (LV'.north) edge[bend right] ($(LV2.south)+(10pt,0pt)$);
+  \end{scope}
+\end{tikzpicture}\]
+
+\vspace{1cm}
+
+\begin{center}
+  \begin{tikzpicture}[remember picture]
+    \node<5->[right, text width=8cm,fill=col2!20, rounded corners,  
+      text=col1, inner sep=5pt] (lv')
+      {\textbf{Universelle Eigenschaft:} Ist $H$ eine Lie Algebra und
+        $f:V\to H$ eine lineare Abbildung, so 
+        $\exists!\ \phi: l(V) \to H$ Homomorphismus von Lie Algebren, der $f$ fortsetzt.};
+    \begin{scope}[overlay]
+      \path<5->[->,color=col2, line width=1pt] 
+        ($(lv'.north)+(0,2pt)$) edge[bend right] ($(lv.west)+(8pt,-10pt)$);
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}[<+->]{Universelle Eigenschaft explizit}
+  \begin{satz}[(Dynkyn-Sprecht-Wever)]
+    Sei $H$ eine Lie Algebra und $\sigma_1:V\to H$ eine lineare Abbildung.
+    Setze für $n\geq 2$
+    \[ \sigma_n:\ \otimes^n V \to H, \ \sigma_n(v_1\otimes\ldots\otimes v_n)
+      := [\sigma_1(v_1),\sigma_{n-1}(v_2\otimes\ldots\otimes v_n)]\,.\]
+    Dann gilt:
+    \[ \sigma = \sum_{n=1}^\infty \frac{\sigma_n}{n}:\ l(V) \to H\]
+    ist der eindeutige Lie-Algebren-Homomorphismus, der 
+    $\sigma_1$ fortsetzt.
+  \end{satz}
+  \begin{beispiel}
+    Ist $V$ selbst eine Lie Algebra und $\sigma_1 = \id_V$, so ist
+    \[ \sigma_n(v_1\otimes\ldots\otimes v_n) = 
+      [v_1,[v_2,[\ldots,[v_{n-1},v_n]..]\]
+  \end{beispiel}
+\end{frame}
+
+  
+\begin{frame}[fragile]{Notationen}
+\vspace*{-10pt}
+\[\begin{tikzpicture}
+  \matrix [column sep=2.5cm, row sep=6pt,
+    column 1/.style={column sep=0pt, anchor=base east},
+    column 2/.style={anchor=base west},
+    column 3/.style={column sep=0pt, anchor=base east},
+    column 4/.style={anchor=base west}]
+  {
+    \node (p) {$P(V) \speq{:=}$};
+      & \node (a) {$\left\{ \ds{\sum_{n\geq 0}} v_n :\ v_n \in \bigotimes^n V
+         \right\}$};
+      & \node (b) {$T(V)\speq{:=} $};
+      & \node{$ \ds{\bigoplus_{n\geq 0}} \bigotimes^n V$}; \\
+    \node{$\fr m(V)\speq{:=} $};
+      & \node (m) {$ \left\{ \ds{\sum_{n\geq 1}} v_n :\ v_n \in
+        \bigotimes^n V \right\}$};
+      & \node{$\overline{T(V)}\speq{:=} $};
+      & \node (tbar) {$\ds{\bigoplus_{n\geq 1}} \bigotimes^n
+          V$}; \\ 
+    \node{$E(V)\speq{:=} $};
+      &\node{$1 + \fr m(V)$}; \\
+  };
+  \begin{scope}[scale=0.8, every node/.style={transform shape}]
+    \draw[<->,line width=3pt, draw=col2!30, text=col1, 
+      shorten <=10pt, shorten >=10pt, font=\tiny, align=center] 
+      (a) 
+      --
+      node[above=5pt,near start] {unendl.\\ Summen}
+      node[above=5pt,near end] {endl.\\ Summen}
+      (b);
+    \node[right, font=\footnotesize, fill=col2!20, rounded corners,
+      text=col1] (p') at ($(p.west)+(25pt,-25pt)$)
+      {assoziative $k$-Algebra durch Cauchy-Produkt};
+    \path[->,color=col2, line width=1pt, shorten <=2pt] 
+      (p'.west) edge[bend left] ($(p.west)+(8pt,-10pt)$);
+  
+    \node[right, font=\footnotesize, fill=col2!20, rounded corners, 
+      text=col1] (b') at ($(b.west)+(25pt,-25pt)$)
+      {unitäre $k$-Algebra durch $\otimes$};
+    \path[->,color=col2, line width=1pt, shorten <=2pt] 
+      (b'.west) edge[bend left] ($(b.west)+(8pt,-10pt)$);
+   
+   \node[right, font=\footnotesize, 
+      text=col1] at ($(m.east)+(0pt,0pt)$)
+      {Ideal in $P(V)$};
+    \node[right, font=\footnotesize, 
+      text=col1] at ($(tbar.east)+(0pt,4pt)$)
+      {Ideal in $T(V)$};
+  \end{scope}
+\end{tikzpicture}\]
+\vspace*{-20pt}
+\[\begin{tikzpicture}
+  \matrix [column sep=0.5cm, row sep=-7pt,
+    column 1/.style={column sep=0pt, anchor=east},
+    column 2/.style={anchor=west},
+    column 3/.style={column sep=0pt, anchor=east},
+    column 4/.style={anchor=west}]
+  {
+    \node (A) {$e:$};
+      & \node{$\fr m(V) \to E(V),$};
+      & \node{$e^x$};
+      & \node{$\speq= \ds{\sum_{n=0}^\infty \frac{x^n}{n!}}$}; \\
+    \node (B) {$\log :$};
+      & \node{$E(V) \to \fr m(V),$};
+      & \node{$\log(1+x)$};
+      & \node{$\speq= \ds{\sum_{n=1}^\infty (-1)^{n-1} \frac{x^n}{n}}$}; \\
+  };
+  \begin{scope}[scale=0.8, every node/.style={transform shape},overlay]
+    \path[<->,line width=2pt,col2!50, text=col1] (B.west) edge[bend left=90]
+      node[sloped, text width=2cm, align=center, font=\scriptsize,above]
+        {sind invers zueinander} (A.west-|B.west);
+  \end{scope}
+\end{tikzpicture}\] \vspace*{-15pt}
+\[\begin{tikzpicture}[remember picture]
+  \matrix [column sep=0.5cm, row sep=-6pt,
+    column 1/.style={column sep=0pt, anchor=base east},
+    column 2/.style={anchor=base west},
+    column 3/.style={column sep=0pt, anchor=base east},
+    column 4/.style={anchor=base west}]
+  {
+    \node{$\widehat l(V)\speq{:=} $};
+      & \node (LV2) {$\{ x \in P(V) :\ \Delta(x) = p(x)+q(x)\}$};
+      & \node (lv) {$l(V)\speq{:=}$};
+      & \node[font=\footnotesize,text width=4cm]
+        {Die kleinste Lie Unteralgebra\\ von $\overline{T(V)}_L$,
+        die $V$ enthält}; \\
+    \node {$\widehat L(V) \speq{:=}$};
+      & \node (LV) {$\{ x \in P(V) :\ \Delta(x) = p(x)q(x)\}$}; \\
+  };
+  \begin{scope}[scale=0.8, every node/.style={transform shape},overlay]
+    \node[right, font=\small, fill=col2!20, rounded corners,  
+      text=col1] (lv'') at ($(lv.west)+(25pt,13pt)$)
+      {die \emph{freie Lie-Algebra von $V$}};
+    \path[->,color=col2, line width=1pt, shorten <=2pt] 
+      (lv''.west) edge[bend right] ($(lv.west)+(8pt,10pt)$);
+  \end{scope}
+  \begin{scope}[scale=0.8, every node/.style={transform shape}]   
+    \node[font=\footnotesize, 
+      text width=6cm,fill=col2!20, rounded corners,  
+      text=col1] (LV') at ($(LV.south)+(-20pt,-25pt)$)
+      {$\Delta,p,q: P(V) \to P(V\oplus V)$ induziert durch
+        \[ \Delta_1(v) = (v,v), \quad p_1(v) = (v,0), \quad q_1(v)=(0,v)\,.\]};
+    \path[->,color=col2, line width=1pt, shorten <=2pt] 
+      (LV'.north) edge[bend right] ($(LV.south)+(10pt,0pt)$);
+    \path[->,color=col2, line width=1pt, shorten <=2pt] 
+      (LV'.north) edge[bend right] ($(LV2.south)+(10pt,0pt)$);
+
+    \node[right, font=\footnotesize, text width=6cm,fill=col2!20, rounded corners,  
+      text=col1, inner sep=5pt] (lv') at ($(lv.south west)+(-5pt,-35pt)$)
+      {\textbf{Universelle Eigenschaft:} Ist $H$ eine Lie Algebra und
+        $f:V\to H$ eine lin. Abbildung, so 
+        $\exists!\ \phi: l(V) \to H$ LA'Hom, der $f$ fortsetzt.};
+      \path[->,color=col2, line width=1pt] 
+        ($(lv'.north west)+(0pt,-5pt)$) edge[bend left] ($(lv.west)+(8pt,-10pt)$);
+  \end{scope}
+\end{tikzpicture}\]
+\end{frame}
+
+\begin{frame}{BCH}
+  \begin{satz}[(Die Baker-Campbell-Hausdorff-Formel)]
+  Sei $V$ ein Vektorraum. Dann induziert
+  \[ \ast:\ \widehat l(V) \times \widehat l(V) \to \widehat l(V),\quad
+    x \ast y \speq{:=} \log(e^x e^y)\]
+  eine Gruppenstruktur auf $\widehat l(V)$, die explizit gegeben ist durch
+  \[ a \ast b \speq= 
+    \sum_{n>0} \frac{(-1)^{n-1}}{n}\ \sum_{\substack{p_1+q_1>0\\\dots\\ p_n+q_n>0}} 
+      \frac{ \left( \sum_{i=1}^n(p_i+q_i) \right)^{-1}}{p_1!q_1! \dots 
+      p_n! q_n!}\ \ad(a)^{p_1} \ad(b)^{q_1} \dots \ad(b)^{q_n-1} b\]
+  \end{satz}
+\end{frame}
+
+\subsection{Nilpotente Lie Algebren}
+
+\begin{frame}[<+->]
+  \begin{definition}
+    Sei $L$ eine Lie Algebra. $L$ heißt \emph{nilpotent},
+    falls $L^n = 0$, für ein $n > 0$,
+    wobei $L^n := [L,L^{n-1}]$, $L^1 := L$.
+  \end{definition}
+
+  \begin{satz}
+    Sei $V$ eine nilpotente Lie Algebra. Dann induziert
+    \[ \ast: V \times V \to V, \]
+    gegeben durch die Baker-Campbell-Hausdorff-Formel,
+    eine Gruppenstruktur auf $V$.
+  \end{satz}
+
+  \begin{definition}
+    Sei $V$ eine nilpotente Lie Algebra. Für die Gruppe $(V,\ast)$ schreibe
+    auch
+    \[ \exp(V) := \{ e^v:\ v\in V\} \qquad\text{mit}\qquad
+      e^ve^w := e^{v\ast w}\,.\]
+  \end{definition}
+\end{frame}
+
+\subsection{DGLAs und die Maurer-Cartan-Gleichung}
+
+\begin{frame}[<+->]
+  \begin{definition}[DGLA]
+    Eine \emph{differential graduierte Lie Algebra} (DGLA) $(L,[\,,\,],\d)$ 
+    besteht aus einem $\Z$-graduierten $k$-Vektorraum $L = \oplus_{i\in\Z} L^i$,
+    einer bilinearen Abbildung $[\ ,\ ]: L \times L \to L$ und einer linearen
+    Abbildung $d \in \Hom^1(L,L)$, genannt \emph{Differential}, so dass
+    \begin{enumerate}
+      \item $[\ ,\ ]$ homogen, alternierend ist, d.h.
+        $[L^i, L^j] \subseteq L^{i+j}$, $[a,b] + (-1)^{\bar a\bar b}[b,a]=0$
+        für alle homogenen $a,b$,
+      \item die graduierte Jacobi-Identität $\forall a,b,c$ homogen gilt:
+        \[ [a,[b,c]] = [[a,b],c] + (-1)^{\bar a\bar b}[b,[a,c]] \]
+      \item und $\d(L^i) \subset L^{i+1}$,\quad $\d\circ \d = 0$,\quad
+        $\d[a,b] = [\d a,b] + (-a)^{\bar a} [a,\d b]$.
+    \end{enumerate}
+  \end{definition}
+  \begin{definition}[formal]
+    Eine DGLA $L$ heißt \emph{formal}, falls $L$ quasiisomorph zur DGLA
+    $H^\bullet (L)$ ist
+  \end{definition}
+  \begin{definition}[Derivation]
+    Sei $L$ eine DGLA. $f: L\to L$ heißt \emph{Derivation von Grad $n$}, falls
+    $f(L^i) \subset L^{i+n}$ und 
+    \[ f([a,b]) = [f(a),b] + (-1)^{n\,\bar a}\, [a,f(b)]\]
+  \end{definition}
+\end{frame}
+
+\begin{frame}[<+->]
+  \begin{definition}[$\ad_0$-nilpotent]
+    Eine DGLA $L$ heißt \emph{$\ad_0$-nilpotent}, falls für alle $i$, das Bild
+    von 
+    \[ \ad:\ L^0 \to \End(L^i)\]
+    in einer nilpotenten Unteralgebra landet.
+  \end{definition}
+  \begin{definition}[Maurer-Cartan-Gleichung]
+    Die \emph{Maurer-Cartan-Gleichung} einer DGLA $L$ lautet
+    \[ \d(a) + \tfrac 1 2 [a,a] = 0, \qquad a\in L^1\,.\]
+    Die Lösungen $MC(L) \subset L^1$ heißen \emph{Maurer-Cartan-Elemente der 
+    DGLA $L$}.
+  \end{definition}
+\end{frame}
+
+\begin{frame}
+  \begin{satz}
+    Sei $L$ eine $\ad_0$-nilpotente DGLA. Dann existiert eine Operation
+    von $\exp(L^0)$ auf den Maurer-Cartan-Elementen $MC(L)$, die explizit
+    für $a\in L^0$, $w \in MC(L)$ gegeben ist durch
+    \[ e^a w \speq= w + \sum_{n\geq 0} \frac{\ad(a)^n}{(n+1)!}\,
+      \big( [a,w] + \d(a) \big)\,,\]
+    diese heißt \emph{Eich-Operation}.
+  \end{satz}
+\end{frame}
+
+\end{document}
